@@ -36,6 +36,12 @@ namespace Facebook.Client
         public string AppId { get; set; }
         public bool LoginInProgress { get; set; }
         public FacebookSession CurrentSession { get; private set; }
+#if(WINDOWS_PHONE)
+        /// <summary>
+        /// Gets or sets the progress bar text
+        /// </summary>
+        public string ProgressBarText { get; set; }
+#endif
 
         public FacebookSessionClient(string appId)
         {
@@ -184,7 +190,9 @@ namespace Facebook.Client
 
             Uri startUri = this.GetLoginUrl(permissions);
             Uri endUri = new Uri("https://www.facebook.com/connect/login_success.html");
-
+#if(WINDOWS_PHONE)
+            WebAuthenticationBroker.ProgressBarText = ProgressBarText;
+#endif
             var result = await WebAuthenticationBroker.AuthenticateAsync(options, startUri, endUri);
 
 

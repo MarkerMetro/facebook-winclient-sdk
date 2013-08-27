@@ -69,6 +69,7 @@ namespace Facebook.Client
         static public bool AuthenticationInProgress { get; private set; }
         static public Uri StartUri { get; private set; }
         static public Uri EndUri { get; private set; }
+        static public string ProgressBarText { get; set; }
 
         /// <summary>
         /// Mimics the WebAuthenticationBroker's AuthenticateAsync method.

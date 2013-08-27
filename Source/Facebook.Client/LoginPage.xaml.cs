@@ -30,7 +30,9 @@ namespace Facebook.Client
 
             BackKeyPress += LoginPage_BackKeyPress;
             browserControl.Navigating += BrowserControl_Navigating;
+            browserControl.Navigated += BrowserControl_Navigated;
             browserControl.NavigationFailed += BrowserControl_NavigationFailed;
+            ProgressIndicator.Text = WebAuthenticationBroker.ProgressBarText;
         }
 
         /// <summary>
@@ -101,6 +103,8 @@ namespace Facebook.Client
         /// </summary>
         private void BrowserControl_Navigating(object sender, NavigatingEventArgs e)
         {
+            ProgressIndicator.Text = WebAuthenticationBroker.ProgressBarText;
+            ProgressIndicator.IsVisible = true;
             if (e.Uri == WebAuthenticationBroker.EndUri)
             {
                 responseData = e.Uri.ToString();
@@ -111,6 +115,14 @@ namespace Facebook.Client
                 // Navigate back now.
                 browserControl.Source = new Uri("about:blank");
                 NavigationService.GoBack();
+            }
+        }
+
+        private void BrowserControl_Navigated(object sender, NavigationEventArgs e)
+        {
+            if(ProgressIndicator.IsVisible)
+            {
+                ProgressIndicator.IsVisible = false;
             }
         }
 
