@@ -103,8 +103,11 @@ namespace Facebook.Client
         /// </summary>
         private void BrowserControl_Navigating(object sender, NavigatingEventArgs e)
         {
-            ProgressIndicator.Text = WebAuthenticationBroker.ProgressBarText;
-            ProgressIndicator.IsVisible = true;
+            if(!string.IsNullOrEmpty(WebAuthenticationBroker.ProgressBarText))
+            {
+                ProgressIndicator.Text = WebAuthenticationBroker.ProgressBarText;
+                ProgressIndicator.IsVisible = true;
+            }
             if (e.Uri == WebAuthenticationBroker.EndUri)
             {
                 responseData = e.Uri.ToString();
